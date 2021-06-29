@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - snapper
+  - ground
   layers:
   - Default
   - TransparentFX
