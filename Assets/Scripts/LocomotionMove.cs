@@ -62,15 +62,25 @@ public class LocomotionMove : MonoBehaviour
 
         SmoothRotate(horizontalVal);
         SmoothMove(verticalVal);
+        Teleport();
+        
+    }
 
+
+
+
+    private void Teleport()
+    {
         Ray ray = new Ray(transform.position, transform.forward);
 
-        if(Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
             line.enabled = true;
 
+            // check whether this is a correct target to navigate to
             bool validTarget = hit.collider.tag == "ground";
 
+            // change the colours of the line accordigly
             if (validTarget)
             {
                 line.startColor = validStart;
@@ -83,8 +93,7 @@ public class LocomotionMove : MonoBehaviour
             }
 
 
-
-
+            // getting the midpoint of the raycast (hand position and the hit point)
 
             Vector3 startPoint = transform.position;
             Vector3 endPoint = hit.point;
@@ -92,6 +101,7 @@ public class LocomotionMove : MonoBehaviour
             midPoint += curveHeight;
 
 
+            // Converting the hit point to a smooth follow, and setting up the reticle
             reticle.SetActive(true);
 
             Vector3 desiredPosition = endPoint - reticle.transform.position;
@@ -105,17 +115,19 @@ public class LocomotionMove : MonoBehaviour
 
 
             // set all the curved line positions
-            for (int i=0; i < lineResolution; i++)
+            for (int i = 0; i < lineResolution; i++)
             {
-                float t = i /(float) lineResolution;
+                float t = i / (float)lineResolution;
                 Vector3 starToMid = Vector3.Lerp(startPoint, midPoint, t);
                 Vector3 midToEnd = Vector3.Lerp(midPoint, reticleEndpoint, t);
 
                 Vector3 curvePos = Vector3.Lerp(starToMid, midToEnd, t);
 
+                //setting the position of all the points in the line, through a loop
                 line.SetPosition(i, curvePos);
             }
 
+            //------- This is just a straight line, not a curve
             //line.SetPosition(0, transform.position);
             //line.SetPosition(1, hit.point);
 
@@ -128,20 +140,17 @@ public class LocomotionMove : MonoBehaviour
 
             }
 
-            
-
         }
         else
         {
             reticle.SetActive(false);
             line.enabled = false;
         }
-
-
     }
 
     void SmoothRotate(float value)
     {
+        // Torate the xrrig towards the y axis
         xrRig.Rotate(Vector3.up, rotateSpeed * value * Time.deltaTime);
     }
 
@@ -156,10 +165,12 @@ public class LocomotionMove : MonoBehaviour
 
     private IEnumerator FadeTeleport(Vector3 newPosition)
     {
+        // disabling more teleports until the current teleport is over
         teleportLock = true;
 
         float currentTime = 0;
 
+        // fade from clear to black
         while(currentTime < 1)
         {
             fader.color = Color.Lerp(Color.clear, Color.black, currentTime);
@@ -177,6 +188,7 @@ public class LocomotionMove : MonoBehaviour
 
         currentTime = 0;
 
+        // fade from black to clear
         while (currentTime < 1)
         {
             fader.color = Color.Lerp(Color.black, Color.clear, currentTime);
