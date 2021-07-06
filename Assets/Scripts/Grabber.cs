@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grabber : MonoBehaviour
 {
     public string gripButton = "RightGripButton";
+    public string triggerButton = "RightTriggerButton";
 
     public Animator anim;
 
@@ -48,6 +49,30 @@ public class Grabber : MonoBehaviour
                 grabbedObject = null;
             }
 
+        }
+
+        if (Input.GetButtonDown(triggerButton))
+        {
+            if(grabbedObject != null)
+            {
+                grabbedObject.OnTriggerStart();
+            }
+        }
+
+        if (Input.GetButton(triggerButton))
+        {
+            if (grabbedObject != null)
+            {
+                grabbedObject.OnTrigger();
+            }
+        }
+
+        if (Input.GetButtonUp(triggerButton))
+        {
+            if (grabbedObject != null)
+            {
+                grabbedObject.OnTriggerEnd();
+            }
         }
 
     }

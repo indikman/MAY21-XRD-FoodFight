@@ -11,11 +11,27 @@ public class GrabbableObject : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         material = GetComponent<Renderer>().material;
         defaultColor = material.color;
     }
+
+    public virtual void OnTriggerStart()
+    {
+
+    }
+
+    public virtual void OnTriggerEnd()
+    {
+
+    }
+
+    public virtual void OnTrigger()
+    {
+
+    }
+
 
     public virtual void OnHoverStart()
     {

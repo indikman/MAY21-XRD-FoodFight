@@ -6,6 +6,7 @@ TagManager:
   tags:
   - snapper
   - ground
+  - paint
   layers:
   - Default
   - TransparentFX
