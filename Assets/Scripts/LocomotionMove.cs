@@ -171,7 +171,7 @@ public class LocomotionMove : MonoBehaviour
         float currentTime = 0;
 
         // fade from clear to black
-        while(currentTime < 1)
+        while(currentTime < 0.2f)
         {
             fader.color = Color.Lerp(Color.clear, Color.black, currentTime);
             yield return new WaitForEndOfFrame();
@@ -184,12 +184,12 @@ public class LocomotionMove : MonoBehaviour
         // Teleport the user here!!
         xrRig.transform.position = newPosition;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         currentTime = 0;
 
         // fade from black to clear
-        while (currentTime < 1)
+        while (currentTime < 0.2f)
         {
             fader.color = Color.Lerp(Color.black, Color.clear, currentTime);
             yield return new WaitForEndOfFrame();
