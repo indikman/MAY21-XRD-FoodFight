@@ -13,7 +13,7 @@ public class PaintGun : GrabbableObject
 
     public override void Start()
     {
-        base.Start();
+        //base.Start();
     }
 
     public override void OnTriggerStart()
@@ -30,4 +30,5 @@ public class PaintGun : GrabbableObject
     }
 
     
+
 }
